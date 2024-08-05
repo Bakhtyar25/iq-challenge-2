@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(ubuntu.className, "bg-WhiteCustom")}>{children}</body>
+      <body className={cn(ubuntu.className, "")}>{children}</body>
     </html>
   );
 }

@@ -23,7 +23,7 @@ export default function FinalSection({}: Props) {
             <br />
             <button
               className="mt-2 underline"
-              onClick={() => dispatch({ type: "ResetForm" })}
+              onClick={() => dispatch({ type: "ResetForm" })} // Dispatching an action to reset the form and start over
             >
               Continue
             </button>

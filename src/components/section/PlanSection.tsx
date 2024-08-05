@@ -1,39 +1,40 @@
-import { packagePlans } from "@/content/data";
-import { useOrder } from "@/context/order-package";
-import React from "react";
-import PackageSwitch from "../PackageSwitch";
+import { packagePlans } from "@/content/data"; // Importing package plans data
+import { useOrder } from "@/context/order-package"; // Importing custom hook to use order context
+import React from "react"; // Importing React
+import PackageSwitch from "../PackageSwitch"; // Importing PackageSwitch component
 
-type Props = {};
+type Props = {}; // Defining Props type (currently empty)
 
+// PlanSection component definition
 export default function PlanSection({}: Props) {
-  const { order, dispatch, getPackagePlanPrice } = useOrder();
+  const { order, dispatch, getPackagePlanPrice } = useOrder(); // Destructuring order state, dispatch function, and getPackagePlanPrice function from custom hook
+
   return (
     <div className="grid gap-4">
       <div className="grid gap-4 lg:grid-cols-3">
         {packagePlans.map((packagePlan, index) => (
           <div
-            key={index}
+            key={index} // Adding unique key for each package plan
             className={`flex cursor-pointer flex-col justify-between gap-1 rounded-lg border p-4 transition-all ease-in-out duration-200 lg:min-h-[10rem] hover:border-PurplishBlue hover:bg-Alabaster ${
               packagePlan.title === order.packagePlan.title
                 ? "border-PurplishBlue bg-Alabaster"
                 : "border-gray-200 bg-transparent"
             }`}
             onClick={() => {
-              dispatch({ type: "SelectPackagePlan", payload: packagePlan });
+              dispatch({ type: "SelectPackagePlan", payload: packagePlan }); // Dispatching action to select package plan
             }}
-            //   dispatch({ type: "SET_package_PLAN", payload: packagePlan })
           >
-            {packagePlan.icon}
+            {packagePlan.icon} {/* Rendering package plan icon */}
             <div>
               <h2 className="mb-0.5 font-bold text-MarineBlue">
-                {packagePlan.title}
+                {packagePlan.title} {/* Rendering package plan title */}
               </h2>
               <p className="text-sm text-CoolGray">
-                ${getPackagePlanPrice(packagePlan)}
+                ${getPackagePlanPrice(packagePlan)} {/* Rendering package plan price */}
               </p>
               {order.packagePeriod === "Yearly" && (
                 <p className="text-xs text-MarineBlue">
-                  {packagePlan.yearlyOffer}
+                  {packagePlan.yearlyOffer} {/* Rendering yearly offer if package period is yearly */}
                 </p>
               )}
             </div>
@@ -41,7 +42,7 @@ export default function PlanSection({}: Props) {
         ))}
       </div>
 
-      <PackageSwitch />
+      <PackageSwitch /> {/* Rendering PackageSwitch component */}
     </div>
   );
 }

@@ -11,9 +11,10 @@ export default function StepBar({}: Props) {
 
   return (
     <div className="relative grid content-start items-start gap-8">
-      <div className="absolute left-1/2 flex -translate-x-1/2 gap-4 p-8 lg:left-auto lg:grid lg:-translate-x-0 lg:content-start lg:items-start lg:gap-8">
+      <div className="absolute left-1/2 flex mt-4 -translate-x-1/2 gap-4 p-8 lg:mt-0 lg:left-auto lg:grid lg:-translate-x-0 lg:content-start lg:items-start lg:gap-8">
         {steps.map((step, index) => {
-          if (steps.length === index + 1) return;
+          if (steps.length === index + 1) return; // Skip the last step
+
           return (
             <div
               key={index + 1}
@@ -24,7 +25,7 @@ export default function StepBar({}: Props) {
                   order.inputErrors.email &&
                   order.inputErrors.phoneNumber
                 ) {
-                  dispatch({ type: "ChangeStep", payload: index + 1 });
+                  dispatch({ type: "ChangeStep", payload: index + 1 }); // Change step on click if there are no input errors
                 }
               }}
             >
@@ -51,11 +52,11 @@ export default function StepBar({}: Props) {
       </div>
 
       <div className="hidden lg:block">
-        <Desktop />
+        <Desktop /> {/* Render Desktop SVG for larger screens */}
       </div>
 
-      <div className="h-44 w-full overflow-hidden lg:hidden">
-        <Mobile />
+      <div className=" h-44 w-full bg-PurplishBlue overflow-hidden lg:hidden">
+        <Mobile /> {/* Render Mobile SVG for smaller screens */}
       </div>
     </div>
   );
