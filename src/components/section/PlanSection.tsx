@@ -2,6 +2,7 @@ import { packagePlans } from "@/content/data"; // Importing package plans data
 import { useOrder } from "@/context/order-package"; // Importing custom hook to use order context
 import React from "react"; // Importing React
 import PackageSwitch from "../PackageSwitch"; // Importing PackageSwitch component
+import { cn } from "@/lib/utils";
 
 type Props = {}; // Defining Props type (currently empty)
 
@@ -30,18 +31,25 @@ export default function PlanSection({}: Props) {
                 {packagePlan.title} {/* Rendering package plan title */}
               </h2>
               <p className="text-sm text-CoolGray">
-                ${getPackagePlanPrice(packagePlan)} {/* Rendering package plan price */}
+                ${getPackagePlanPrice(packagePlan)}{" "}
+                {/* Rendering package plan price */}
               </p>
-              {order.packagePeriod === "Yearly" && (
-                <p className="text-xs text-MarineBlue">
-                  {packagePlan.yearlyOffer} {/* Rendering yearly offer if package period is yearly */}
-                </p>
-              )}
+
+              <p
+                className={cn(
+                  "text-xs text-MarineBlue transition-all duration-150 ease-linear ",
+                  order.packagePeriod === "Yearly"
+                    ? "opacity-100 h-fit pt-1"
+                    : "opacity-0 h-0"
+                )}
+              >
+                {packagePlan.yearlyOffer}{" "}
+                {/* Rendering yearly offer if package period is yearly */}
+              </p>
             </div>
           </div>
         ))}
       </div>
-
       <PackageSwitch /> {/* Rendering PackageSwitch component */}
     </div>
   );
