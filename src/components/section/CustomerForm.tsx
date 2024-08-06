@@ -50,7 +50,6 @@ export default function CustomerForm({}: Props) {
 
   // Function to handle form submission
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     dispatch({ type: "SetCustomerInfo", payload: values }); // Dispatching action to set customer info
     dispatch({ type: "ChangeStep", payload: order.step + 1 }); // Dispatching action to change to the next step
     dispatch({
