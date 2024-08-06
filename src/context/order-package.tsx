@@ -1,34 +1,33 @@
 // Importing necessary modules and data
 import { packagePlans } from "@/content/data";
 import {
-  createContext,       
-  Dispatch,            
-  useContext,          
-  useEffect,           
-  useReducer,          
-  useState,            
+  createContext,
+  Dispatch,
+  useContext,
+  useEffect,
+  useReducer,
 } from "react";
 
 // Initial state for the order
 const initialState: Order = {
-  step: 1,  // Current step in the form
-  customerInfo: { name: "", email: "", phoneNumber: "" },  // Customer information
-  inputErrors: { name: false, email: false, phoneNumber: false },  // Input error flags
-  packagePeriod: "Monthly",  // Selected package period
-  packagePlan: packagePlans[0],  // Selected package plan
-  addOns: [],  // Selected add-ons
-  total: 0,  // Total cost
-  showErrors: false,  // Flag to show errors
+  step: 1, // Current step in the form
+  customerInfo: { name: "", email: "" }, // Customer information
+  inputErrors: { name: false, email: false, phoneNumber: false }, // Input error flags
+  packagePeriod: "Monthly", // Selected package period
+  packagePlan: packagePlans[0], // Selected package plan
+  addOns: [], // Selected add-ons
+  total: 0, // Total cost
+  showErrors: false, // Flag to show errors
 };
 
 // Type defining the context properties
-type OrderContextProps ={
-  order: Order;  
-  dispatch: Dispatch<Action>;  
-  getPackagePlanPrice: (packagePlan: PackagePlan) => string;  // Function to get package plan price
-  addOnIsSelected: (addOn: AddOn) => boolean;  // Function to check if add-on is selected
-  getAddOnPrice: (addOn: AddOn) => string;  // Function to get add-on price
-}
+type OrderContextProps = {
+  order: Order;
+  dispatch: Dispatch<Action>;
+  getPackagePlanPrice: (packagePlan: PackagePlan) => string; // Function to get package plan price
+  addOnIsSelected: (addOn: AddOn) => boolean; // Function to check if add-on is selected
+  getAddOnPrice: (addOn: AddOn) => string; // Function to get add-on price
+};
 
 // Reducer function to manage the order state
 const orderReducer = (state: Order, action: Action): Order => {
@@ -64,7 +63,9 @@ const orderReducer = (state: Order, action: Action): Order => {
         ...state,
         addOns: !isSelected
           ? [...state.addOns, action.payload]
-          : state.addOns.filter((addOn) => addOn.title !== action.payload.title),
+          : state.addOns.filter(
+              (addOn) => addOn.title !== action.payload.title
+            ),
       };
     case "SetPackagePeriod":
       return { ...state, packagePeriod: action.payload };

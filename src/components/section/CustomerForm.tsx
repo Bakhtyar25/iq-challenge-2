@@ -31,14 +31,14 @@ const formSchema = z.object({
       message: "name must be at least 2 characters.",
     }),
   email: z.string().email("This is not a valid email."),
-  phoneNumber: z
-    .string()
-    .min(11, { message: "Must be a valid mobile number" })
-    .max(11, { message: "Must be a valid mobile number" }),
+  phoneNumber: z.coerce
+    .number()
+    .int()
+    .min(11, { message: "Must be a valid mobile number 11" }),
 });
 
 // CustomerForm component definition
-export default function CustomerForm({ }: Props) {
+export default function CustomerForm({}: Props) {
   const { order, dispatch } = useOrder(); // Using the custom useOrder hook to get the order state and dispatch function
 
   // Initializing the form with default values and validation schema
@@ -50,6 +50,7 @@ export default function CustomerForm({ }: Props) {
 
   // Function to handle form submission
   function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
     dispatch({ type: "SetCustomerInfo", payload: values }); // Dispatching action to set customer info
     dispatch({ type: "ChangeStep", payload: order.step + 1 }); // Dispatching action to change to the next step
     dispatch({
@@ -75,7 +76,7 @@ export default function CustomerForm({ }: Props) {
             onSubmit={form.handleSubmit(onSubmit)} // Handling form submission
             className="space-y-5 max-w-4xl mx-auto g"
           >
-            {CustomerInfoInputs.map((input) => (
+            {CustomerInfoInputs.slice(0, 2).map((input) => (
               <FormField
                 key={input.id} // Adding a unique key for each form field
                 control={form.control}
@@ -91,8 +92,10 @@ export default function CustomerForm({ }: Props) {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className={cn("!rounded-md !border !px-5 text-base !py-6 focus-visible:!ring-0 focus-visible:!ring-offset-0 focus-visible:!border-MarineBlue focus-visible:!border-2",
-                          form.getFieldState(input.id)?.invalid && "border-StrawberryRed" // Conditional border color based on validation
+                        className={cn(
+                          "!rounded-md !border !px-5 text-base !py-6 focus-visible:!ring-0 focus-visible:!ring-offset-0 focus-visible:!border-MarineBlue focus-visible:!border-2",
+                          form.getFieldState(input.id)?.invalid &&
+                            "border-StrawberryRed" // Conditional border color based on validation
                         )}
                         {...field}
                         placeholder={input?.placeholder}
@@ -102,6 +105,33 @@ export default function CustomerForm({ }: Props) {
                 )}
               />
             ))}
+            <FormField // Adding a unique key for each form field
+              control={form.control}
+              name={"phoneNumber"}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="flex justify-between text-base">
+                    <span className="!text-MarineBlue font-light">
+                      Phone Number {/* Input label */}
+                    </span>
+                    <FormMessage className="text-StrawberryRed font-light" />{" "}
+                    {/* Error message */}
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      className={cn(
+                        "!rounded-md !border !px-5 text-base !py-6 focus-visible:!ring-0 focus-visible:!ring-offset-0 focus-visible:!border-MarineBlue focus-visible:!border-2",
+                        form.getFieldState("phoneNumber")?.invalid &&
+                          "border-StrawberryRed" // Conditional border color based on validation
+                      )}
+                      {...field}
+                      type="number"
+                      placeholder={"e.g. 07701234567"}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
           </form>
         </Form>
       </div>
@@ -114,7 +144,6 @@ function getDefaultValues(values: CustomerInfo) {
   const defaultValues: CustomerInfo = {
     name: "",
     email: "",
-    phoneNumber: "",
   };
 
   return { ...defaultValues, ...values };
