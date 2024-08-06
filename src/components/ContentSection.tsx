@@ -48,8 +48,8 @@ export default function ContentSection({}: Props) {
               type="submit" // Setting button type to submit
               className={`rounded-md px-5 py-2.5 text-white transition ${
                 order.step === 4
-                  ? "bg-PurplishBlue hover:bg-PurplishBlue"
-                  : "bg-MarineBlue hover:bg-MarineBlue-light"
+                  ? "bg-PurplishBlue hover:bg-indigo-400"
+                  : "bg-MarineBlue hover:bg-MarineBlue/80"
               }`} // Conditionally set the button color based on the current step
               onClick={() => {
                 if (

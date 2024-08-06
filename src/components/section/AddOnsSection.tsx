@@ -18,7 +18,7 @@ export default function AddOnsSection({}: Props) {
       {addOns.map((addOn, index) => (
         <div
           key={index} // Unique key for each add-on item
-          className={`flex cursor-pointer items-center justify-center gap-4 rounded-lg border p-4 transition ${
+          className={`flex cursor-pointer items-center justify-center gap-4 rounded-lg border p-4 transition hover:border-PurplishBlue hover:bg-Alabaster ${
             addOnIsSelected(addOn)
               ? "border-PurplishBlue bg-Alabaster" // Styles for selected add-on
               : "border-gray-200 bg-transparent" // Styles for non-selected add-on

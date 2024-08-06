@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { useOrder } from "@/context/order-package";
 import { Button } from "../ui/button";
 import { CustomerInfoInputs } from "@/content/data";
+import { cn } from "@/lib/utils";
 
 // Props type definition (currently empty)
 type Props = {};
@@ -37,13 +38,14 @@ const formSchema = z.object({
 });
 
 // CustomerForm component definition
-export default function CustomerForm({}: Props) {
+export default function CustomerForm({ }: Props) {
   const { order, dispatch } = useOrder(); // Using the custom useOrder hook to get the order state and dispatch function
 
   // Initializing the form with default values and validation schema
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: getDefaultValues(order?.customerInfo!),
+    mode: "all",
   });
 
   // Function to handle form submission
@@ -89,7 +91,9 @@ export default function CustomerForm({}: Props) {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="!rounded-md !border !px-5 text-base !py-6 focus-visible:!ring-0 focus-visible:!ring-offset-0 focus-visible:!border-MarineBlue focus-visible:!border-2"
+                        className={cn("!rounded-md !border !px-5 text-base !py-6 focus-visible:!ring-0 focus-visible:!ring-offset-0 focus-visible:!border-MarineBlue focus-visible:!border-2",
+                          form.getFieldState(input.id)?.invalid && "border-StrawberryRed" // Conditional border color based on validation
+                        )}
                         {...field}
                         placeholder={input?.placeholder}
                       />
