@@ -23,18 +23,28 @@ type Props = {};
 // Schema definition using Zod for form validation
 const formSchema = z.object({
   name: z
-    .string()
+    .string({
+      required_error: "Please enter your name",
+    })
     .max(45, {
       message: "name must not exceed 45 characters",
     })
     .min(2, {
       message: "name must be at least 2 characters.",
     }),
-  email: z.string().email("This is not a valid email."),
-  phoneNumber: z.coerce
-    .number()
-    .int()
-    .min(11, { message: "Must be a valid mobile number 11" }),
+  email: z
+    .string({
+      required_error: "Please enter your email",
+    })
+    .email("This is not a valid email."),
+  phoneNumber: z
+    .string({
+      required_error: "Please enter your phone number",
+    })
+    .min(11, { message: "Must be a valid mobile number 11" })
+    .max(11, {
+      message: "Must be a valid mobile number 11",
+    }),
 });
 
 // CustomerForm component definition

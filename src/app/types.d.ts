@@ -23,7 +23,7 @@ type OrderProviderProps = {
 type CustomerInfo = {
   name: string;
   email: string;
-  phoneNumber?: number;
+  phoneNumber?: string;
 };
 
 type Order = {

@@ -16,9 +16,11 @@ export default function StepBar({}: Props) {
           if (steps.length === index + 1) return; // Skip the last step
 
           return (
-            <div
+            <button
               key={index + 1}
-              className="flex cursor-pointer gap-3.5 text-white"
+              type={order?.step !== index + 1 ? "submit" : "button"} // Change button type to submit if the step is not active
+              form="customer-form" // Form ID to submit the form
+              className="flex cursor-pointer gap-3.5 text-white text-left"
               onClick={() => {
                 if (
                   order.inputErrors.name &&
@@ -46,7 +48,7 @@ export default function StepBar({}: Props) {
                   {step.stepTitle}
                 </h2>
               </div>
-            </div>
+            </button>
           );
         })}
       </div>
